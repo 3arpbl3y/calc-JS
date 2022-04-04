@@ -37,6 +37,8 @@ document.addEventListener("keypress", (e) => {
   }
 });
 
+document.querySelector("p").textContent = "text";
+
 document.querySelector(".buttons").onclick = (event) => {
   if (!event.target.classList.contains("btn")) return;
   if (event.target.classList.contains("reset")) return;
@@ -49,13 +51,53 @@ document.querySelector(".buttons").onclick = (event) => {
 
       console.log(a, b, sign);
       out.textContent = a;
-    } else if (a != '' && b!== '' && finish)
-  }
+    } else if (a !== "" && b !== "" && finish) {
+      b = key;
+      finish = false;
+      out.textContent = b;
+    } else {
+      b += key;
+      out.textContent = b;
+    }
 
+    console.log(a, b, sign);
+    return;
+  }
   if (action.includes(key)) {
     sign = key;
     out.textContent = sign;
     console.log(a, b, sign);
     return;
+  }
+
+  //pressed equal =
+
+  if (key === "=") {
+    if (b === "") {
+      b = a;
+    }
+    switch (sign) {
+      case "+":
+        a = +a + +b;
+        break;
+      case "-":
+        a = +a - +b;
+        break;
+      case "*":
+        a = +a * +b;
+        break;
+      case "/":
+        if (b === "0") {
+          out.textContent = "3ЯЯ0Я";
+          a = "";
+          b = "";
+          sign = "";
+          return;
+        }
+        a = +a / +b;
+        break;
+    }
+    finish = true;
+    out.textContent = a;
   }
 };
